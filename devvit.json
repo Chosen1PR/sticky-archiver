@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developers.reddit.com/schema/config-file.v1.json",
+  "name": "unban-message",
+  "permissions": {
+    "http": {
+      "enable": false
+    },
+    "media": false,
+    "realtime": false,
+    "redis": true,
+    "reddit": {
+      "enable": true
+    }
+  },
+  "server": {
+    "dir": "dist/server",
+    "entry": "index.cjs"
+  },
+  "settings": {
+    "subreddit": {
+      "enable-message": {
+        "type": "boolean",
+        "label": "Send unban message",
+        "helpText": "If enabled, any message text typed below will be sent to a user when they are unbanned.",
+        "defaultValue": true
+      },
+      "send-as-subreddit": {
+        "type": "boolean",
+        "label": "Send message as subreddit",
+        "helpText": "If enabled, the message will be sent as modmail. If disabled, the message will be sent from the bot account (whose inbox is NOT monitored).",
+        "defaultValue": true
+      },
+      "message-text": {
+        "type": "paragraph",
+        "label": "Unban message text",
+        "helpText": "Type the message text you want to send the user when they are unbanned. If left blank, no message will be sent. You can use markdown formatting here.",
+        "defaultValue": ""
+      },
+      "mod-blacklist": {
+        "type": "paragraph",
+        "label": "Mod blocklist",
+        "helpText": "Comma (,) separated list of moderator usernames (without leading \"u/\"). For unban actions made by these mods, messages will not be sent. This setting is ignored if the allowlist is not empty.",
+        "defaultValue": ""
+      },
+      "mod-whitelist": {
+        "type": "paragraph",
+        "label": "Mod allowlist",
+        "helpText": "Comma (,) separated list of moderator usernames (without leading \"u/\"). Messages will only be sent for unban actions made by these mods. Overrides the blocklist above.",
+        "defaultValue": ""
+      }
+    }
+  },
+  "menu": {
+    "items": [
+      {
+        "label": "Unban Message",
+        "forUserType": "moderator",
+        "location": ["subreddit"],
+        "endpoint": "/internal/menu/app-settings",
+        "postFilter": "none"
+      }
+    ]
+  },
+  "triggers": {
+    "onModAction": "/internal/triggers/on-mod-action"
+  },
+  "dev": {
+    "subreddit": "CapitalOneBank"
+  }
+}
