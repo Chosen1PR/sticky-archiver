@@ -1,42 +1,52 @@
 ## Features
 
-This app sends a customizable message (via modmail or private chat) automatically whenever a user is unbanned. Mods can also:
+Do you have scheduled megathreads in your community such as daily, weekly, or monthly discussion threads? Would you like to automate the locking of each one of those threads once a newer one replaces it?
+
+This app locks pinned (stickied) posts, such as megathreads, automatically once they are unpinned and bumped off the subreddit highlights.
+
 - Enable or disable the app at will without needing to uninstall it.
-- Choose whether to send as the subreddit via modmail or privately from the bot account (whose inbox is NOT monitored).
-- Define a blocklist of mods whose unban actions will not trigger messages.
-- Define an allowlist of mods if *only* unban actions from certain mods should trigger messages.
+- Configure a list of flairs for posts that this app will automatically lock when unpinned.
+- Configure a list of title keywords for posts that this app will automatically lock when unpinned.
+- Optionally unlock posts when they are pinned (for accidental unpins).
 
 ---
 
 ## Changelog
 
-### [0.0.10] (2025-12-09)
+### [1.0.0] (2025-12-14)
+
+- Bumped major version of app.
+- Bumped Devvit version to 0.12.5.
+- Rewrote entire app to use Devvit Web patterns.
+- Performance enhancement release only; no functional enhancements or bug fixes.
+
+### [0.0.11] (2025-12-01)
 
 #### Features
 
-- Added the ability to define an allowlist or blocklist of mods that determines which mods' unban actions trigger messages.
-- Rewrote entire app to use Devvit Web patterns.
+- Added an option to unlock posts when they are pinned, for accidental unpins.
 
-### [0.0.9] (2025-11-28)
-
-#### Bug Fixes
-
-- App is now properly logging message send failures to the console.
-
-### [0.0.7] (2025-11-22)
+### [0.0.10] (2025-11-22)
 
 #### Features
 
 - Added a proper link to the config settings from the subreddit-level menu item.
 - Bumped Devvit version to 0.12.x.
 
-### [0.0.6] Initial version (2025-10-10)
+### [0.0.9] (2025-08-01)
+
+#### Bug Fixes
+
+- Fixed a bug where the unpinned post was not being locked, even if it had a flair or title match in the config settings.
+
+### [0.0.8] Initial version (2025-07-06)
 
 #### Features
 
-- Send an editable message automatically whenever a user is unbanned.
+- Lock pinned (stickied) posts automatically once they are unpinned and bumped off the subreddit highlights.
 - Enable or disable the app at will without needing to uninstall it.
-- Choose whether to send as the subreddit via modmail or from the bot account (whose inbox is NOT monitored).
+- Configure a list of flairs for posts that this app will automatically lock when unpinned.
+- Configure a list of title keywords for posts that this app will automatically lock when unpinned.
 
 #### Bug Fixes
 
