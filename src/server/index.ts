@@ -3,7 +3,6 @@ import {
   createServer,
   context,
   getServerPort,
-  //reddit,
   settings,
 } from "@devvit/web/server";
 

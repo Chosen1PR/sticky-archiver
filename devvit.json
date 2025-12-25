@@ -54,6 +54,7 @@
     "items": [
       {
         "label": "Pinned Post Archiver",
+        "description": "Settings",
         "forUserType": "moderator",
         "location": ["subreddit"],
         "endpoint": "/internal/menu/app-settings",

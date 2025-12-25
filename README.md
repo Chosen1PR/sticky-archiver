@@ -13,6 +13,10 @@ This app locks pinned (stickied) posts, such as megathreads, automatically once 
 
 ## Changelog
 
+### [1.0.1] (2025-12-24)
+
+- Added the description "Settings" to the subreddit-level menu item.
+
 ### [1.0.0] (2025-12-14)
 
 - Bumped major version of app.
