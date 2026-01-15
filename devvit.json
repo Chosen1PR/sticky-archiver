@@ -53,7 +53,7 @@
   "menu": {
     "items": [
       {
-        "label": "Pinned Post Archiver",
+        "label": "Pinned Thread Archiver",
         "description": "Settings",
         "forUserType": "moderator",
         "location": ["subreddit"],
@@ -64,6 +64,9 @@
   },
   "triggers": {
     "onModAction": "/internal/triggers/on-mod-action"
+  },
+  "marketingAssets": {
+    "icon": "assets/ppa-icon.png"
   },
   "dev": {
     "subreddit": "CapitalOneBank"
