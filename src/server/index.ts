@@ -24,7 +24,7 @@ const router = express.Router();
 // Menu item for app settings
 router.post("/internal/menu/app-settings", async (_req, res): Promise<void> => {
   res.json({
-    navigateTo: `https://developers.reddit.com/r/${context.subredditName}/apps/${context.appName}`,
+    navigateTo: `https://developers.reddit.com/r/${context.subredditName}/apps/${context.appSlug}`,
   });
 });
 
