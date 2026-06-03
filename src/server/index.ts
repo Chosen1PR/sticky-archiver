@@ -1,7 +1,7 @@
 import express from "express";
 import {
   createServer,
-  context,
+  //context,
   getServerPort,
   settings,
 } from "@devvit/web/server";
@@ -22,11 +22,14 @@ app.use(express.text());
 const router = express.Router();
 
 // Menu item for app settings
+// Likely not necessary
+/*
 router.post("/internal/menu/app-settings", async (_req, res): Promise<void> => {
   res.json({
     navigateTo: `https://developers.reddit.com/r/${context.subredditName}/apps/${context.appSlug}`,
   });
 });
+*/
 
 // Trigger handler for mod action, specifically unsticky and sticky
 router.post('/internal/triggers/on-mod-action', async (req, res): Promise<void> => {

@@ -50,18 +50,6 @@
       }
     }
   },
-  "menu": {
-    "items": [
-      {
-        "label": "Pinned Thread Archiver",
-        "description": "Settings",
-        "forUserType": "moderator",
-        "location": ["subreddit"],
-        "endpoint": "/internal/menu/app-settings",
-        "postFilter": "none"
-      }
-    ]
-  },
   "triggers": {
     "onModAction": "/internal/triggers/on-mod-action"
   },
