@@ -87,3 +87,22 @@ function isTitleInList(title: string | undefined, titleList: string) {
   //reached end of list, no match
   return false;
 }
+
+// Helper function to get the values from the raw JSON request body.
+export function getRequestBodyValue(body: any, ...paths: Array<string[]>) {
+  for (const path of paths) {
+    let current: any = body;
+    let found = true;
+    for (const key of path) {
+      if (current == null || typeof current !== 'object' || !(key in current)) {
+        found = false;
+        break;
+      }
+      current = current[key];
+    }
+    if (found && current != null && current !== '') {
+      return String(current);
+    }
+  }
+  return '';
+}

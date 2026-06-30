@@ -8,7 +8,7 @@ import {
 
 import { PostId } from "../shared/types";
 
-import { lockPost, unlockPost } from "./utils"
+import { lockPost, unlockPost, getRequestBodyValue } from "./utils"
 
 const app = express();
 
@@ -33,40 +33,38 @@ router.post("/internal/menu/app-settings", async (_req, res): Promise<void> => {
 
 // Trigger handler for mod action, specifically unsticky and sticky
 router.post('/internal/triggers/on-mod-action', async (req, res): Promise<void> => {
-  // Get full mod action.
-  //console.log(`Full Mod Action: ${JSON.stringify(req.body, null, 2)}`);
+  const action = getRequestBodyValue(req.body, ['action']) ?? '',
+  commentId = getRequestBodyValue(req.body, ['targetComment', 'id']) ?? '',
+  postId = getRequestBodyValue(req.body, ['targetPost', 'id']) ?? '',
+  flairText = getRequestBodyValue(req.body, ['targetPost', 'linkFlair', 'text']) ?? '',
+  postTitle = getRequestBodyValue(req.body, ['targetPost', 'title']) ?? '';
+  if (postId == '') return;
   try {
-    const type = req.body.type as string;
-    if (type != undefined && type === "ModAction") {
-      const action = req.body.action as string;
-      if (action != undefined && action === "unsticky") {
-        //console.log(`Unsticky Mod Action: ${JSON.stringify(req.body, null, 2)}`);
-        const commentId = req.body.targetComment.id as string;
-        if (commentId != undefined && commentId != "") return; // If action is on a comment, do nothing.
-        const enableArchive = (await settings.get("enable-archive")) as boolean;
-        if (!enableArchive) return; // If the setting is not enabled, do nothing.
-        const isPostLocked = req.body.targetPost.isLocked as boolean;
-        if (!isPostLocked)
-          await lockPost(
-            req.body.targetPost.id as PostId,
-            req.body.targetPost.linkFlair.text as string,
-            req.body.targetPost.title as string
-          );
-      }
-      else if (action != undefined && action === "sticky") {
-        //console.log(`Sticky Mod Action: ${JSON.stringify(req.body, null, 2)}`);
-        const commentId = req.body.targetComment.id as string;
-        if (commentId != undefined && commentId != "") return; // If action is on a comment, do nothing.
-        const enableUnlock = (await settings.get("enable-unlock")) as boolean;
-        if (!enableUnlock) return; // If the setting is not enabled, do nothing.
-        const isPostLocked = req.body.targetPost.isLocked as boolean;
-        if (isPostLocked)
-          await unlockPost(
-            req.body.targetPost.id as PostId,
-            req.body.targetPost.linkFlair.text as string,
-            req.body.targetPost.title as string
-          );
-      }
+    if (action === "unsticky") {
+      //console.log(`Unsticky Mod Action: ${JSON.stringify(req.body, null, 2)}`);
+      if (commentId != '') return; // If action is on a comment, do nothing.
+      const enableArchive = (await settings.get("enable-archive")) as boolean;
+      if (!enableArchive) return; // If the setting is not enabled, do nothing.
+      const isPostLocked = req.body.targetPost.isLocked as boolean;
+      if (!isPostLocked)
+        await lockPost(
+          postId as PostId,
+          flairText,
+          postTitle
+        );
+    }
+    else if (action === "sticky") {
+      //console.log(`Sticky Mod Action: ${JSON.stringify(req.body, null, 2)}`);
+      if (commentId != '') return; // If action is on a comment, do nothing.
+      const enableUnlock = (await settings.get("enable-unlock")) as boolean;
+      if (!enableUnlock) return; // If the setting is not enabled, do nothing.
+      const isPostLocked = req.body.targetPost.isLocked as boolean;
+      if (isPostLocked)
+        await unlockPost(
+          postId as PostId,
+          flairText,
+          postTitle
+        );
     }
     res.status(200).json({ status: 'ok' });
   }

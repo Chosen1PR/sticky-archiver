@@ -13,6 +13,12 @@ This app locks pinned (stickied) posts, such as megathreads, automatically once 
 
 ## Changelog
 
+### [1.0.8] (2026-06-29)
+
+#### Bug Fix
+
+- Fixed an issue caused by a recent change in how Reddit sends mod action triggers.
+
 ### [1.0.7] (2026-06-03)
 
 - Removed the Settings menu item at subreddit level for a cleaner menu. Settings are still accessible from developers.reddit.com.
