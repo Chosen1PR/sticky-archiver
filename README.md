@@ -13,7 +13,7 @@ This app locks pinned (stickied) posts, such as megathreads, automatically once 
 
 ## Changelog
 
-### [1.0.8] (2026-06-29)
+### [1.0.9] (2026-06-29)
 
 #### Bug Fix
 

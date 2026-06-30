@@ -8,7 +8,12 @@ import {
 
 import { PostId } from "../shared/types";
 
-import { lockPost, unlockPost, getRequestBodyValue } from "./utils"
+import {
+  lockPost,
+  unlockPost,
+  getRequestBodyValue,
+  getRequestBodyValueAsBoolean
+} from "./utils"
 
 const app = express();
 
@@ -37,15 +42,15 @@ router.post('/internal/triggers/on-mod-action', async (req, res): Promise<void> 
   commentId = getRequestBodyValue(req.body, ['targetComment', 'id']) ?? '',
   postId = getRequestBodyValue(req.body, ['targetPost', 'id']) ?? '',
   flairText = getRequestBodyValue(req.body, ['targetPost', 'linkFlair', 'text']) ?? '',
-  postTitle = getRequestBodyValue(req.body, ['targetPost', 'title']) ?? '';
-  if (postId == '') return;
+  postTitle = getRequestBodyValue(req.body, ['targetPost', 'title']) ?? '',
+  isPostLocked = getRequestBodyValueAsBoolean(req.body, ['targetPost', 'isLocked']) ?? false;
+  //console.log(`postId: ${postId}\ncommentId: ${commentId}`);
+  if (postId == '' || commentId != '') return;
   try {
-    if (action === "unsticky") {
+    if (action == "unsticky") {
       //console.log(`Unsticky Mod Action: ${JSON.stringify(req.body, null, 2)}`);
-      if (commentId != '') return; // If action is on a comment, do nothing.
       const enableArchive = (await settings.get("enable-archive")) as boolean;
       if (!enableArchive) return; // If the setting is not enabled, do nothing.
-      const isPostLocked = req.body.targetPost.isLocked as boolean;
       if (!isPostLocked)
         await lockPost(
           postId as PostId,
@@ -53,9 +58,8 @@ router.post('/internal/triggers/on-mod-action', async (req, res): Promise<void> 
           postTitle
         );
     }
-    else if (action === "sticky") {
+    else if (action == "sticky") {
       //console.log(`Sticky Mod Action: ${JSON.stringify(req.body, null, 2)}`);
-      if (commentId != '') return; // If action is on a comment, do nothing.
       const enableUnlock = (await settings.get("enable-unlock")) as boolean;
       if (!enableUnlock) return; // If the setting is not enabled, do nothing.
       const isPostLocked = req.body.targetPost.isLocked as boolean;
